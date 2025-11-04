@@ -114,3 +114,27 @@ async function getNewId() {
   return Utilisateurs.max('id')
     .then((maxId) => (maxId || 0) + 1);
 }
+
+exports.delete = (req, res) => {
+  const id = req.params.id;
+
+  Utilisateurs.destroy({
+    where: { id: id },
+  })
+    .then((num) => {
+      if (num == 1) {
+        res.send({
+          message: 'Utilisateur was deleted successfully!',
+        });
+      } else {
+        res.send({
+          message: `Cannot delete Utilisateur with id=${id}. Maybe Utilisateur was not found!`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Could not delete Utilisateur with id=' + id,
+      });
+    });
+}
