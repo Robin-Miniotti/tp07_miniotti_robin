@@ -1,44 +1,140 @@
-const { v4: uuidv4 } = require ("uuid");
-
-
-const db = require("../models");
-const Utilisateurs = db.utilisateurs;
+const db = require('../models');
+const Utilisateurs = db.utilisateur;
 const Op = db.Sequelize.Op;
-
+  
 // Find a single Utilisateur with an login
 exports.login = (req, res) => {
   const utilisateur = {
     login: req.body.login,
-    password: req.body.password
+    pass: req.body.pass,
   };
 
-  // Test
-  let pattern = /^[A-Za-z0-9]{1,20}$/;
-  if (pattern.test(utilisateur.login) && pattern.test(utilisateur.password)) {
-     Utilisateurs.findOne({ where: { login: utilisateur.login } })
-    .then(data => {
-      if (data) {
+  const pattern = /^[A-Za-z0-9]{1,20}$/;
+
+  // Check input format
+  if (!pattern.test(utilisateur.login) || !pattern.test(utilisateur.pass)) {
+    return res.status(400).send({ message: 'Login ou password incorrect (format invalide)' });
+  }
+
+  Utilisateurs.findOne({ where: { login: utilisateur.login } })
+    .then((data) => {
+      if (!data) {
+        return res.status(404).send({
+          message: `Utilisateur avec le login "${utilisateur.login}" introuvable.`,
+        });
+      }
+
+      // Compare the provided password with the stored one
+      if (data.pass === utilisateur.pass) {
         const user = {
           id: data.id,
-          name: data.nom,
-          email: data.email
+          login: data.login,
         };
-      
-        res.send(data);
+        return res.send(user);
       } else {
-        res.status(404).send({
-          message: `Cannot find Utilisateur with login=${utilisateur.login}.`
+        return res.status(401).send({ message: 'Mot de passe incorrect' });
+      }
+    })
+    .catch((err) => {
+      return res.status(400).send({
+        message: 'Erreur lors de la récupération de l’utilisateur : ' + err.message,
+      });
+    });
+};
+
+
+exports.get = (req, res) => {
+  Utilisateurs.findAll()
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(400).send({
+        message: err.message,
+      });
+    });
+};
+
+exports.create = async (req, res) => {
+  if (!req.body) {
+    res.status(400).send({
+      message: 'Content can not be empty!',
+    });
+    return;
+  }
+
+  const validationError = validateUtilisateur(req.body);
+  if (validationError) {
+    return res.status(400).send(validationError);
+  }
+
+  const utilisateur = {
+    id: await getNewId(),
+    nom: req.body.nom,
+    prenom: req.body.prenom,
+    login: req.body.login,
+    pass: req.body.pass,
+  };
+
+  Utilisateurs.create(utilisateur)
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message,
+      });
+    });
+};
+
+function validateUtilisateur(utilisateur) {
+  let patternLogin = /^[A-Za-z0-9]{1,20}$/;
+  let patternPass = /^[A-Za-z0-9]{1,20}$/;
+
+  if (!utilisateur.login || !patternLogin.test(utilisateur.login)) {
+    return { message: 'Login is required and must be alphanumeric up to 20 characters.' };
+  }
+
+  if (!utilisateur.pass || !patternPass.test(utilisateur.pass)) {
+    return { message: 'Password is required and must be alphanumeric up to 20 characters.' };
+  }
+
+  if (!utilisateur.nom || utilisateur.nom.length > 50) {
+    return { message: 'Nom is required and must be up to 50 characters.' };
+  }
+
+  if (!utilisateur.prenom || utilisateur.prenom.length > 50) {
+    return { message: 'Prenom is required and must be up to 50 characters.' };
+  }
+
+  return null;
+}
+
+async function getNewId() {
+  return Utilisateurs.max('id')
+    .then((maxId) => (maxId || 0) + 1);
+}
+
+exports.delete = (req, res) => {
+  const id = req.params.id;
+
+  Utilisateurs.destroy({
+    where: { id: id },
+  })
+    .then((num) => {
+      if (num == 1) {
+        res.send({
+          message: 'Utilisateur was deleted successfully!',
+        });
+      } else {
+        res.send({
+          message: `Cannot delete Utilisateur with id=${id}. Maybe Utilisateur was not found!`,
         });
       }
     })
-    .catch(err => {
-      res.status(400).send({
-        message: "Error retrieving Utilisateur with login=" + utilisateur.login
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Could not delete Utilisateur with id=' + id,
       });
     });
-  } else {
-    res.status(400).send({
-      message: "Login ou password incorrect" 
-    });
-  }
-};
+}
