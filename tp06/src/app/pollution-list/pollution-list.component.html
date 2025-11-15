@@ -1,7 +1,7 @@
 <div class="pollution-container">
   <h2>Liste des pollutions</h2>
 
-  @if (selectedPollutionId === null && isCreating === false) {
+  @if (isCreating === false) {
     <div class="pollution-list">
       <div class="search-container">
         <form class="filter-form">
@@ -61,7 +61,7 @@
               class="pollution-photo"
             />
             <div class="action-buttons">
-              <button (click)="showDetails(pollution.id)" class="details-btn">Voir détails</button>
+              <button [routerLink]="['/pollutions/details', pollution.id]" class="details-btn">Voir détails</button>
               <button (click)="deletePollution(pollution.id)" class="delete-btn">Supprimer</button>
               <button (click)="editPollution(pollution.id)" class="edit-btn">Modifier</button>
             </div>
@@ -69,15 +69,8 @@
         }
       </ul>
     </div>
-  } @else if(selectedPollutionId !== null) {
-    <div class="details-section">
-      <div class="details-header">
-        <h3>Détails de la pollution</h3>
-        <button (click)="hideDetails()" class="close-btn">← Retour à la liste</button>
-      </div>
-      <app-pollution-details [pollutionId]="selectedPollutionId!"></app-pollution-details>
-    </div>
-  } @else if (isCreating) {
+  }
+  @if (isCreating) {
     <div class="create-section">      
       <app-pollution-create-form (pollutionCreated)="onPollutionCreated($event)"></app-pollution-create-form>
     </div>

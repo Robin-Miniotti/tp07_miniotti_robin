@@ -20,6 +20,10 @@ const routes: Routes = [
   {
     path: 'edit/:id',
     component: PollutionUpdateFormComponent
+  },
+  {
+    path: 'details/:id',
+    component: PollutionDetailsComponent
   }
 ];
 

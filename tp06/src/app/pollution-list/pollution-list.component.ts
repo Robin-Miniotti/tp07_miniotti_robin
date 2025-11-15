@@ -17,8 +17,7 @@ import { PollutionCreateFormComponent } from '../pollution-create-form/pollution
 })  
 export class PollutionListComponent implements OnInit {
 
-  pollutions$: Observable<Pollution[]>;
-  selectedPollutionId: number | null = null;
+  pollutions$: Observable<Pollution[]>;  
   titreSearch: string = '';
   typePollutionSearch: string = '';
   availableTypes: string[] = ['Air', 'Eau', 'Chimique', 'Autre'];
@@ -33,19 +32,14 @@ export class PollutionListComponent implements OnInit {
   deletePollution(id: number): void {
     this.pollutionService.deletePollution(id).subscribe(() => {
       this.pollutions$ = this.pollutionService.getPollutions();
-      if (this.selectedPollutionId === id) {
-        this.selectedPollutionId = null;
-      }
     });
   }
 
   showDetails(pollutionId: number): void {
-    this.selectedPollutionId = pollutionId;
+    this.router.navigate(['/pollutions/details', pollutionId]);
   }
 
-  hideDetails(): void {
-    this.selectedPollutionId = null;
-  }
+  // hideDetails removed, navigation now handles details view
 
   TitleSearch(): void {
     if (this.titreSearch.trim() === '') {      
@@ -75,8 +69,7 @@ export class PollutionListComponent implements OnInit {
   }
   
   startCreating(): void { 
-    this.isCreating = true;
-    this.selectedPollutionId = null;
+    this.isCreating = true;    
     this.router.navigate(['/pollutions/create']);
   }
 

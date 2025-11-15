@@ -1,8 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Pollution } from '../models/pollution';
 import { PollutionServiceService } from '../pollution-service.service';
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-pollution-details',
@@ -11,13 +13,22 @@ import { PollutionServiceService } from '../pollution-service.service';
   styleUrl: './pollution-details.component.css'
 })
 export class PollutionDetailsComponent implements OnInit {
-  @Input() pollutionId!: number;
+  pollutionId!: number;
   pollution$: Observable<Pollution>;
 
-  constructor(private pollutionService: PollutionServiceService) {}
+  constructor(
+    private pollutionService: PollutionServiceService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.pollution$ = this.pollutionService.getPollutionById(this.pollutionId);
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (id) {
+        this.pollutionId = +id;
+        this.pollution$ = this.pollutionService.getPollutionById(this.pollutionId);
+      }
+    });
   }
 
   formatDate(date: Date | string): string {
@@ -30,3 +41,4 @@ export class PollutionDetailsComponent implements OnInit {
     });
   }
 }
+
