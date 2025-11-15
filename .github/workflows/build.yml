@@ -2,12 +2,10 @@ name: Build and publish
 
 on:
   push:
-    branches:
-      - api
+    branches:      
       - main
   pull_request:
-    branches:
-      - api
+    branches:      
       - main
 
 env:
