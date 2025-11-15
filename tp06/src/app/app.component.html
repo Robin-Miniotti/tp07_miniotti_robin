@@ -1,8 +1,15 @@
 <div id="app-container">
+	<header class="top-menu">
+		<div class="top-menu-inner">
+			<div class="site-title">TP06 Pollution Tracker</div>
+			<nav>
+				<a routerLink="/pollutions" routerLinkActive="active">Pollutions</a>
+				<a routerLink="/login" routerLinkActive="active">Login</a>
+			</nav>
+		</div>
+	</header>
 
-  <router-outlet></router-outlet>
-
-
-<button routerLink="/login">Go to Login</button>
-
+	<main>
+		<router-outlet></router-outlet>
+	</main>
 </div>

@@ -13,7 +13,7 @@ import { UserServiceService } from './user-service.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  title = 'tp03';
+  title = 'tp06';
   loggedIn = true;
 
   constructor(private router: Router, private userService: UserServiceService) {}
