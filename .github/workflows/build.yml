@@ -10,7 +10,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: Robin-Miniotti/apiTemplate
+  IMAGE_NAME: rminiotti/apiTemplate
 
 jobs:
   build-and-publish:
