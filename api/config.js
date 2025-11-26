@@ -5,7 +5,8 @@ module.exports = {
     // You can provide a full DATABASE_URL (recommended) or individual parts below.
     DATABASE_URL:
         process.env.DATABASE_URL ||
-        `postgres://${process.env.DB_USER || 'pollutions_user'}:${process.env.DB_PASSWORD || '1X9lkb5069FJKU7ZgfcIM31hwaA9n9LP'}@${process.env.DB_HOST || 'dpg-d41mvac9c44c73d0019g-a.oregon-postgres.render.com'}:${process.env.DB_PORT || '5432'}/${process.env.DB_NAME || 'pollutions'}`,
+        `postgres://${process.env.DB_USER || 'pollutions_user'}:${process.env.DB_PASSWORD || 'QH0JXIr9G2qgqtY08nw42gKxrSS8Qms5'}@${process.env.DB_HOST || 'dpg-d4jf8815pdvs739dgi3g-a.oregon-postgres.render.com'}:${process.env.DB_PORT || '5432'}/${process.env.DB_NAME || 'pollutions_9hwr'}`,
     DB_SSL: process.env.DB_SSL === 'true' || true,
 };
 
+//postgresql://pollutions_user:QH0JXIr9G2qgqtY08nw42gKxrSS8Qms5@dpg-d4jf8815pdvs739dgi3g-a.oregon-postgres.render.com/pollutions_9hwr
