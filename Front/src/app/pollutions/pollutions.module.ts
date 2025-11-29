@@ -24,6 +24,10 @@ const routes: Routes = [
   {
     path: 'details/:id',
     component: PollutionDetailsComponent
+  },
+  {
+    path: '**',
+    redirectTo: ''
   }
 ];
 
