@@ -10,7 +10,8 @@ import { PollutionServiceService } from '../pollution-service.service';
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './pollution-update-form.component.html',
   styleUrl: './pollution-update-form.component.css',
-  providers: [PollutionServiceService]
+  providers: [PollutionServiceService],
+  standalone: true
 })
 export class PollutionUpdateFormComponent {
   submitted = false;

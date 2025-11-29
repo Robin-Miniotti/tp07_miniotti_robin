@@ -10,7 +10,9 @@ import { ActivatedRoute } from '@angular/router';
   selector: 'app-pollution-details',
   imports: [CommonModule],
   templateUrl: './pollution-details.component.html',
-  styleUrl: './pollution-details.component.css'
+  styleUrls: ['./pollution-details.component.css'],
+  providers: [PollutionServiceService],
+  standalone: true
 })
 export class PollutionDetailsComponent implements OnInit {
   pollutionId!: number;

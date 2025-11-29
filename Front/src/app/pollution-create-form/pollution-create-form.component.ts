@@ -9,8 +9,9 @@ import { PollutionServiceService } from '../pollution-service.service';
   selector: 'app-pollution-create-form',
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './pollution-create-form.component.html',
-  styleUrl: './pollution-create-form.component.css',
-  providers: [PollutionServiceService]
+  styleUrls: ['./pollution-create-form.component.css'],
+  providers: [PollutionServiceService],
+  standalone: true
 })
 export class PollutionCreateFormComponent {
   submitted = false;

@@ -9,7 +9,9 @@ import { CommonModule } from '@angular/common';
   selector: 'app-login-screen',
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './login-screen.component.html',
-  styleUrls: ['./login-screen.component.css']
+  styleUrls: ['./login-screen.component.css'],
+  providers: [UserServiceService],
+  standalone: true
 })
 export class LoginScreenComponent implements OnInit {
   loginForm!: FormGroup;

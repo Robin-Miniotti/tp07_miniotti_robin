@@ -10,7 +10,8 @@ import { UserServiceService } from './user-service.service';
   selector: 'app-root',
   imports: [RouterOutlet, RouterLink, PollutionDetailsComponent, PollutionListComponent, UserModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css'],
+  standalone: true
 })
 export class AppComponent implements OnInit {
   title = 'tp06';

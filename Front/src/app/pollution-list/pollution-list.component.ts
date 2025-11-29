@@ -14,7 +14,8 @@ import { FavorisService } from '../favoris/favoris.service';
   imports: [CommonModule, RouterModule, FormsModule, PollutionCreateFormComponent],
   templateUrl: './pollution-list.component.html',
   styleUrl: './pollution-list.component.css', 
-  providers: [PollutionServiceService]
+  providers: [PollutionServiceService],
+  standalone: true
 })  
 export class PollutionListComponent implements OnInit {
 
