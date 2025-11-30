@@ -1,6 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const path = require("path");
 
 const app  = express ();
 
@@ -19,6 +18,11 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
+// simple route
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to CNAM application." });
+});
+
 const db = require("./models");
 
 db.sequelize.sync()
@@ -29,16 +33,7 @@ db.sequelize.sync()
     console.log("Failed to sync db: " + err.message);
   });
 
-// API routes (must come before static file serving)
 require("./routes")(app);
-
-// Serve Angular static files
-app.use(express.static(path.join(__dirname, 'public')));
-
-// All other routes should redirect to Angular's index.html (for client-side routing)
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
 
 // set port, listen for requests (use PORT env when running locally or in Render)
 const PORT = process.env.PORT || 3000;
