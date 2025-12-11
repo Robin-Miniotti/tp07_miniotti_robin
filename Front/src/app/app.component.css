@@ -147,3 +147,6 @@ main {
   color: #6b7280;
   font-size: 0.9rem;
 }
+
+Access token pas dans le local storage a mettre dans le store
+Refresh token peut être stocké dans le local storage car il est moins sensible

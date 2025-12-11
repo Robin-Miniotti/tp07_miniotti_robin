@@ -1,4 +1,4 @@
-
+const { checkJwt}  = require('./jwtMiddleware');
 
 module.exports = app => {
     const utilisateur = require("../controllers/utilisateur.controllers.js");
@@ -8,9 +8,9 @@ module.exports = app => {
 
     // login utilisateur
     router.post("/login", utilisateur.login);
-    router.get("/", utilisateur.get);
+    router.get("/", checkJwt, utilisateur.get);
     router.post("/", utilisateur.create);
-    router.delete("/:id", utilisateur.delete);    
+    router.delete("/:id",checkJwt, utilisateur.delete);    
   
     app.use('/api/utilisateur', router);
   };

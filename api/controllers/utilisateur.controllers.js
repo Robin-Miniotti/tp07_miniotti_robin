@@ -2,6 +2,13 @@ const db = require('../models');
 const Utilisateurs = db.utilisateur;
 const Op = db.Sequelize.Op;
   
+const jwt = require('jsonwebtoken');
+const { ACCESS_TOKEN_SECRET }  = require ("../config.js");
+
+function generateAccessToken(user) {
+    return jwt.sign(user, ACCESS_TOKEN_SECRET, { expiresIn: '1800s' });
+  }
+
 // Find a single Utilisateur with an login
 exports.login = (req, res) => {
   const utilisateur = {
