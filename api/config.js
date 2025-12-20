@@ -15,10 +15,10 @@
 module.exports =  {
     ACCESS_TOKEN_SECRET : "EMMA123",
     BDD : {
-    "host" :"dpg-d4jf8815pdvs739dgi3g-a.oregon-postgres.render.com",
+    "host" :"dpg-d53a2dm3jp1c738gm0dg-a.oregon-postgres.render.com",
     "port" : "5432",
     "user" : "pollutions_user",
-    "password" : "QH0JXIr9G2qgqtY08nw42gKxrSS8Qms5",
-    "bdname" :"pollutions_9hwr"
+    "password" : "9NXBmKvgkUjbdUSaDIlkQjnIFqmTyBmb",
+    "bdname" :"pollutions_wxfb"
     }
 }
