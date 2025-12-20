@@ -1,22 +1,8 @@
 services:
-  # Backend API
   - type: web
-    name: backend-nodejs
+    name: angular-node-monorepo
     env: docker
     dockerContext: .
     plan: free
     region: frankfurt
     dockerfilePath: ./Dockerfile
-  
-  # Frontend Angular
-  - type: web
-    name: frontend-angular
-    env: static
-    buildCommand: cd Front && npm install && npm run build
-    staticPublishPath: Front/dist/tp06/browser
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
-    plan: free
-    region: frankfurt

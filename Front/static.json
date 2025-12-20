@@ -1,17 +1,6 @@
 {
-  "root": "dist/tp06/browser",
+  "root": "dist/tp06",
   "routes": {
     "/**": "index.html"
-  },
-  "headers": {
-    "/**": {
-      "Cache-Control": "no-cache, no-store, must-revalidate"
-    },
-    "/**.js": {
-      "Content-Type": "application/javascript; charset=UTF-8"
-    },
-    "/**.css": {
-      "Content-Type": "text/css; charset=UTF-8"
-    }
   }
 }
