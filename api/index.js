@@ -5,9 +5,12 @@ const app  = express ();
 
 var corsOptions = {
   origin: "*",
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  headers: 'Content-Type, Authorization',
-  exposedHeaders:'Authorization'
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  exposedHeaders: ['Authorization'],
+  credentials: true,
+  preflightContinue: false,
+  optionsSuccessStatus: 204
 };
 
 app.use(cors(corsOptions));
