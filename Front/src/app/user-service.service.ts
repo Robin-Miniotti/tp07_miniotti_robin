@@ -2,19 +2,22 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { User } from './models/user';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { Store } from '@ngxs/store';
+import { AuthConnexion, AuthDeconnexion } from '../shared/actions/auth-action';
+import { DeleteAccessToken } from '../shared/actions/acces-token-action';
+import { AuthState } from '../shared/states/auth-state';
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class UserServiceService {
 
-  private isLoggedInSubject = new BehaviorSubject<boolean>(false);
-  public isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
-
-  constructor( private http: HttpClient ) { }
+  constructor(
+    private http: HttpClient,
+    private store: Store
+  ) { }
 
   getUsers() {
     return this.http.get<User[]>(environment.apiUrl + "/utilisateur");
@@ -30,17 +33,24 @@ export class UserServiceService {
 
   login(login: string, pass: string) {
     return this.http.post<any>(environment.apiUrl + "/utilisateur/login", { login, pass }).pipe(
-      tap(() => {
-        this.isLoggedInSubject.next(true);
+      tap((user) => {
+        // Stocker l'utilisateur dans le store NGXS
+        this.store.dispatch(new AuthConnexion(user));
       })
     );
   }
 
   logout() {
-    this.isLoggedInSubject.next(false);
+    // Supprimer l'utilisateur et le token du store
+    this.store.dispatch(new AuthDeconnexion());
+    this.store.dispatch(new DeleteAccessToken());
   }
 
-  getIsLoggedIn(): boolean {
-    return this.isLoggedInSubject.value;
+  isLoggedIn(): Observable<boolean> {
+    return this.store.select(AuthState.isConnected);
+  }
+
+  getConnectedUser() {
+    return this.store.select(AuthState.getConnectedUser);
   }
 }

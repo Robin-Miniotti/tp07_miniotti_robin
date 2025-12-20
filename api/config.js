@@ -17,8 +17,8 @@ module.exports =  {
     BDD : {
     "host" :"dpg-d4jf8815pdvs739dgi3g-a.oregon-postgres.render.com",
     "port" : "5432",
-    "user" : "pollution_user",
+    "user" : "pollutions_user",
     "password" : "QH0JXIr9G2qgqtY08nw42gKxrSS8Qms5",
-    "bdname" :"pollution"
+    "bdname" :"pollutions_9hwr"
     }
 }
