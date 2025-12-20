@@ -2,7 +2,7 @@ const { v4: uuidv4 } = require ("uuid");
 
 
 const db = require("../models");
-const Pollution = db.pollution;
+const Pollution = db.Pollutions;
 const Op = db.Sequelize.Op;
 
 // Get all pollutions
@@ -154,4 +154,6 @@ function validatePollution(data) {
   if (!data.longitude) {
     return { message: 'Le champ "longitude" est requis.' };
   }
+
+  return null;
 }

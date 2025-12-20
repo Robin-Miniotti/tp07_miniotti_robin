@@ -1,5 +1,5 @@
 const db = require('../models');
-const Utilisateurs = db.utilisateur;
+const Utilisateurs = db.Utilisateurs;
 const Op = db.Sequelize.Op;
   
 const jwt = require('jsonwebtoken');
@@ -11,6 +11,14 @@ function generateAccessToken(user) {
 
 // Find a single Utilisateur with an login
 exports.login = (req, res) => {
+  // Check if body exists and has required fields
+  if (!req.body || !req.body.login || !req.body.pass) {
+    return res.status(400).send({ 
+      message: 'Login et password sont requis',
+      received: req.body 
+    });
+  }
+
   const utilisateur = {
     login: req.body.login,
     pass: req.body.pass,
