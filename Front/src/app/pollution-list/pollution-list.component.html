@@ -1,6 +1,10 @@
 <div class="pollution-container">
   <h2>Liste des pollutions</h2>
 
+  <!-- Login reminder for certain actions -->
+  @if ((isLoggedIn$ | async) === false) {    
+  }
+
   @if (isCreating === false) {
     <div class="pollution-list">
       <div class="search-container">
@@ -47,7 +51,11 @@
 
 
       <div class="create-pollution-section">        
-        <button (click)="startCreating()" class="details-btn">Ajouter une pollution</button>        
+        <button 
+          (click)="startCreating()" 
+          class="details-btn">
+          Ajouter une pollution
+        </button>        
       </div>
       <div class="favorites-filter-section">
         <button
@@ -71,8 +79,16 @@
             />
             <div class="action-buttons">
               <button [routerLink]="['/pollutions/details', pollution.id]" class="details-btn">Voir détails</button>
-              <button (click)="deletePollution(pollution.id)" class="delete-btn">Supprimer</button>
-              <button (click)="editPollution(pollution.id)" class="edit-btn">Modifier</button>
+              <button 
+                (click)="deletePollution(pollution.id)" 
+                class="delete-btn">
+                Supprimer
+              </button>
+              <button 
+                (click)="editPollution(pollution.id)" 
+                class="edit-btn">
+                Modifier
+              </button>
               <button 
                 (click)="toggleFavorite(pollution)" 
                 [class]="isFavorite(pollution.id) ? 'favorite-btn favorite-active' : 'favorite-btn'"

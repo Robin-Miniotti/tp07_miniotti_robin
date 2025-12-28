@@ -8,6 +8,7 @@ import { PollutionServiceService } from '../pollution-service.service';
 import { Pollution } from '../models/pollution';
 import { PollutionCreateFormComponent } from '../pollution-create-form/pollution-create-form.component';
 import { FavorisService } from '../favoris/favoris.service';
+import { UserServiceService } from '../user-service.service';
 
 @Component({
   selector: 'app-pollution-list', 
@@ -25,18 +26,33 @@ export class PollutionListComponent implements OnInit {
   availableTypes: string[] = ['Air', 'Eau', 'Chimique', 'Autre'];
   isCreating: boolean = false;
   showOnlyFavorites: boolean = false;
+  isLoggedIn$: Observable<boolean>;
+  private isLoggedIn: boolean = false;
 
   constructor(
     private pollutionService: PollutionServiceService, 
     private router: Router,
-    public favorisService: FavorisService
+    public favorisService: FavorisService,
+    private userService: UserServiceService
   ) {}
 
   ngOnInit(): void {
     this.pollutions$ = this.pollutionService.getPollutions();
+    this.isLoggedIn$ = this.userService.isLoggedIn();
+    
+    // Subscribe to login status
+    this.userService.isLoggedIn().subscribe(status => {
+      this.isLoggedIn = status;
+    });
   }
 
   deletePollution(id: number): void {
+    if (!this.isLoggedIn) {
+      alert('⚠️ Vous devez être connecté pour supprimer une pollution.\n\nVeuillez vous connecter pour continuer.');
+      this.router.navigate(['/login']);
+      return;
+    }
+    
     this.pollutionService.deletePollution(id).subscribe(() => {
       this.pollutions$ = this.pollutionService.getPollutions();
     });
@@ -95,10 +111,22 @@ export class PollutionListComponent implements OnInit {
   }  
 
   editPollution(pollutionId: number): void {
+    if (!this.isLoggedIn) {
+      alert('⚠️ Vous devez être connecté pour modifier une pollution.\n\nVeuillez vous connecter pour continuer.');
+      this.router.navigate(['/login']);
+      return;
+    }
+    
     this.router.navigate(['/pollutions/edit', pollutionId]);
   }
   
-  startCreating(): void { 
+  startCreating(): void {
+    if (!this.isLoggedIn) {
+      alert('⚠️ Vous devez être connecté pour créer une pollution.\n\nVeuillez vous connecter pour continuer.');
+      this.router.navigate(['/login']);
+      return;
+    }
+    
     this.isCreating = true;    
     this.router.navigate(['/pollutions/create']);
   }

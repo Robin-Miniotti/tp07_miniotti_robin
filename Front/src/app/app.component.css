@@ -97,6 +97,76 @@ header.top-menu nav a.active {
   font-size: 1.1rem;
 }
 
+/* Logout button */
+.logout-btn {
+  color: #fff;
+  background: #f44336;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 150ms, box-shadow 120ms;
+  box-shadow: 0 2px 6px rgba(244, 67, 54, 0.3);
+}
+
+.logout-btn:hover {
+  background: #d32f2f;
+  box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
+}
+
+/* Login notification banner */
+.login-notification {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  padding: 14px 20px;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.25);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.notification-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.notification-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.notification-text {
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.login-link {
+  color: #fff;
+  text-decoration: underline;
+  font-weight: 700;
+  transition: opacity 150ms;
+}
+
+.login-link:hover {
+  opacity: 0.8;
+}
+
 /* Main content area */
 main {
   flex: 1 1 auto;
@@ -148,5 +218,5 @@ main {
   font-size: 0.9rem;
 }
 
-Access token pas dans le local storage a mettre dans le store
-Refresh token peut être stocké dans le local storage car il est moins sensible
+/* Access token pas dans le local storage a mettre dans le store
+   Refresh token peut être stocké dans le local storage car il est moins sensible */

@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent implements OnInit {
   title = 'tp06';
-  loggedIn = true;
+  loggedIn = false;
   favorisCount$: Observable<number>;
 
   constructor(private router: Router, private userService: UserServiceService, private store: Store) {
@@ -30,5 +30,10 @@ export class AppComponent implements OnInit {
     this.userService.isLoggedIn().subscribe(isLoggedIn => {
       this.loggedIn = isLoggedIn;
     });
+  }
+
+  logout(): void {
+    this.userService.logout();
+    this.router.navigate(['/login']);
   }
 }
